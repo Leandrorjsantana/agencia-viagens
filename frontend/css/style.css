@@ -1,0 +1,12 @@
+/* frontend/css/style.css (adicione no final) */
+
+.logo-img {
+    height: 35px; /* Ajuste a altura do seu logo conforme necessário */
+    width: auto;
+}
+
+.btn-login {
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 500;
+}

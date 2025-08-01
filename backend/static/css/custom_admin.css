@@ -1,0 +1,9 @@
+/*
+  Esta regra CSS é mais forte.
+  Ela encontra o rodapé (footer.main-footer) e, dentro dele,
+  o elemento que está "flutuando à direita" (.float-right),
+  e o torna completamente invisível.
+*/
+.main-footer .float-right {
+    display: none !important;
+}
