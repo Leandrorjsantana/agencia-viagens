@@ -158,3 +158,17 @@ MEDIA_URL = '/media/'
 
 # Caminho no seu computador onde os arquivos de mídia serão salvos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# settings.py (adicione no final)
+
+# --- CONFIGURAÇÃO DE E-MAIL ---
+# Para desenvolvimento, os e-mails serão impressos no console onde você rodou o 'runserver'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Quando for para produção, você substituirá o código acima por este, com os dados do seu provedor:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com' # Exemplo para Gmail
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'seu-email@gmail.com' # Seu e-mail
+# EMAIL_HOST_PASSWORD = 'sua-senha-de-app' # Importante: Use uma "Senha de App" do Google, não sua senha normal
