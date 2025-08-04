@@ -1,0 +1,18 @@
+{% extends "usuarios/base_form.html" %}
+
+{% block title %}Entrar na sua Conta{% endblock %}
+
+{% block content %}
+    <h2 class="card-title text-center mb-4">Entrar</h2>
+    {% if form.errors %}
+        <div class="alert alert-danger">E-mail ou senha inválidos.</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </div>
+    </form>
+    <p class="text-center mt-3">Não tem uma conta? <a href="{% url 'usuarios:cadastro' %}">Cadastre-se</a></p>
+{% endblock %}

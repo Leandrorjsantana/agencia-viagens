@@ -1,3 +1,5 @@
+# backend/agencia/urls.py (VERSÃO COMPLETA E CORRIGIDA)
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -10,7 +12,8 @@ admin.site.index_title = "Bem-vindo ao Painel de Controle"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pacotes.urls')),
-    path('', include('configuracoes.urls')), # <-- Adicionamos a URL do novo app
+    path('', include('configuracoes.urls')),
+    path('', include('usuarios.urls')), # <-- Adicionamos a URL do app de usuários
 ]
 
 if settings.DEBUG:

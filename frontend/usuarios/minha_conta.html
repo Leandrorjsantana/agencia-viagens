@@ -1,0 +1,20 @@
+{% extends "usuarios/base_form.html" %}
+
+{% block title %}Minha Conta{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Bem-vindo, {{ user.nome }}!</h2>
+        <p class="lead">Seu cadastro foi realizado com sucesso.</p>
+        <p>Enviamos uma confirmação para o seu e-mail: <strong>{{ user.email }}</strong></p>
+        <hr>
+        <p>Para agilizar seu atendimento, envie uma mensagem para nossa equipe no WhatsApp!</p>
+        <a href="{{ link_whatsapp }}" target="_blank" class="btn btn-success btn-lg">
+            <i class="bi bi-whatsapp me-2"></i>Confirmar no WhatsApp
+        </a>
+        <div class="mt-4">
+            <a href="{% url 'pacotes:home' %}" class="btn btn-secondary">Ver Destinos</a>
+            <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger">Sair</a>
+        </div>
+    </div>
+{% endblock %}

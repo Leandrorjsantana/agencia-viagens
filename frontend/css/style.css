@@ -1,12 +1,152 @@
-/* frontend/css/style.css (adicione no final) */
+/* frontend/css/style.css (VERSÃO COMPLETA E CORRIGIDA) */
 
-.logo-img {
-    height: 35px; /* Ajuste a altura do seu logo conforme necessário */
-    width: auto;
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
 }
 
+/* --- ESTILOS DO HEADER --- */
+.logo-img {
+    height: 35px;
+    width: auto;
+}
 .btn-login {
     border-radius: 20px;
     padding: 0.4rem 1.2rem;
     font-weight: 500;
+}
+
+/* --- ESTILOS DO FORMULÁRIO DE BUSCA --- */
+.hero-section {
+    position: relative;
+    padding: 6rem 0;
+    background-color: #fd7e14;
+}
+.search-form-container {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+}
+.search-form-container .nav-tabs { border-bottom: 0; }
+.search-form-container .nav-link {
+    border: 0;
+    color: rgba(255,255,255,0.7);
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+.search-form-container .nav-link.active {
+    background-color: #341a6b;
+    color: white;
+    font-weight: bold;
+}
+.search-form-container .tab-content {
+    background-color: #341a6b !important;
+    border-radius: 0 0.25rem 0.25rem 0.25rem;
+}
+.search-form-container .btn-danger {
+    background-color: #fd4f4f;
+    border-color: #fd4f4f;
+}
+.search-form-container .form-control[readonly] {
+    background-color: #fff;
+}
+
+/* --- ESTILOS DOS CARDS DE DESTINO --- */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.card-img-overlay {
+    transition: background 0.3s ease;
+}
+.card-link:hover .card-img-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent) !important;
+}
+
+/* --- ESTILOS DOS CARDS DE PACOTE (ATUALIZADOS) --- */
+.package-card-wrapper {
+    text-decoration: none;
+    display: block;
+}
+.package-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animação suave */
+}
+.package-card-wrapper:hover .package-card {
+    transform: translateY(-5px); /* Efeito de "levantar" */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12); /* Sombra mais pronunciada */
+}
+.package-card-img-wrapper {
+    position: relative;
+}
+.package-card-overlay {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+}
+.package-card-content {
+    padding: 1rem;
+}
+.package-card-label {
+    font-size: 0.65rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.package-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+.package-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+.package-card-rating .badge {
+    background-color: #007a4d; /* Verde mais escuro e elegante */
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 0.3em 0.5em;
+}
+.package-card-rating .stars {
+    color: #ffc107;
+}
+.package-card-details {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.6;
+}
+.package-card-price-info {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.package-card-price-info .price-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+.package-card-price-info .price-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #222; /* Cor do preço alterada de azul para preto */
+}
+.package-card-price-info .price-notes {
+    font-size: 0.75rem;
+    color: #888;
 }
