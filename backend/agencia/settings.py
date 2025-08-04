@@ -39,6 +39,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # --- LINHA ADICIONADA AQUI ---
+                'configuracoes.context_processors.site_config', # Nosso novo injetor
             ],
         },
     },
@@ -65,16 +67,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# --- CONFIGURAÇÃO CORRIGIDA ---
-# Garantimos que o Django procure arquivos estáticos em duas pastas:
-# 1. Na nossa pasta 'frontend' (no diretório raiz do projeto)
-# 2. Na pasta 'static' dentro do backend (para o css do admin)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR.parent, 'frontend'),
     os.path.join(BASE_DIR, 'static'),
 ]
-# -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
