@@ -1,0 +1,18 @@
+{% extends "usuarios/base_form.html" %}
+{% load static %}
+{% block title %}Minhas Viagens{% endblock %}
+
+{% block content %}
+    <h2 class="card-title text-center mb-4">Minhas Viagens</h2>
+    <p class="text-center text-muted">Aqui está o histórico de suas solicitações de reserva.</p>
+    <div id="lista-reservas">
+        <p class="text-center">Carregando suas reservas...</p>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'usuarios:minha_conta' %}" class="btn btn-secondary">Voltar para Minha Conta</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/minhas_viagens.js' %}"></script>
+{% endblock %}

@@ -1,8 +1,11 @@
+# backend/usuarios/views.py (VERSÃO COMPLETA E CORRIGIDA)
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from pacotes.models import Reserva # Importamos o modelo Reserva
 
 def cadastro_view(request):
     if request.method == 'POST':
@@ -10,12 +13,7 @@ def cadastro_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-
-            # Enviar e-mail de boas-vindas
-            assunto = 'Bem-vindo à Sua Viagem!'
-            mensagem = f'Olá {user.nome},\n\nSeu cadastro foi realizado com sucesso!\n\nExplore nossos destinos e planeje sua próxima aventura.'
-            send_mail(assunto, mensagem, 'nao-responda@suaagencia.com', [user.email])
-
+            send_mail('Bem-vindo à Sua Viagem!', f'Olá {user.nome},\n\nSeu cadastro foi realizado com sucesso!', 'nao-responda@suaagencia.com', [user.email])
             return redirect('usuarios:minha_conta')
     else:
         form = CustomUserCreationForm()
@@ -41,12 +39,11 @@ def logout_view(request):
 
 @login_required
 def minha_conta_view(request):
-    # Lógica para a mensagem do WhatsApp
-    numero_agencia = '5511999999999' # SEU NÚMERO
-    mensagem_whats = f'Olá! Acabei de me cadastrar no site Sua Viagem. Meu nome é {request.user.nome} e meu e-mail é {request.user.email}.'
-    link_whats = f'https://wa.me/{numero_agencia}?text={mensagem_whats}'
+    # Busca todas as reservas do usuário que está logado, ordenando pelas mais recentes
+    reservas = Reserva.objects.filter(usuario=request.user).order_by('-data_solicitacao')
     
+    # Prepara o contexto para enviar os dados para o HTML
     contexto = {
-        'link_whatsapp': link_whats
+        'reservas': reservas
     }
     return render(request, 'usuarios/minha_conta.html', contexto)

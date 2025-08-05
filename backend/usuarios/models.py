@@ -1,3 +1,5 @@
+# backend/usuarios/models.py (VERSÃO CORRETA)
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -18,7 +20,18 @@ class UsuarioManager(BaseUserManager):
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    nome = models.CharField(max_length=150, blank=True)
+    nome = models.CharField("Nome Completo", max_length=150)
+    telefone = models.CharField("Telefone", max_length=20, blank=True)
+    
+    # --- GARANTA QUE SEU CÓDIGO ESTEJA ASSIM ---
+    cep = models.CharField("CEP", max_length=9, blank=True)
+    rua = models.CharField("Rua / Logradouro", max_length=255, blank=True)
+    numero = models.CharField("Número", max_length=20, blank=True)
+    bairro = models.CharField("Bairro", max_length=100, blank=True)
+    cidade = models.CharField("Cidade", max_length=100, blank=True)
+    estado = models.CharField("Estado", max_length=2, blank=True)
+    # ------------------------------------
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

@@ -1,26 +1,29 @@
-// frontend/js/search_results.js (VERSÃO COMPLETA E CORRIGIDA)
+// frontend/js/search_results.js
 
 document.addEventListener('DOMContentLoaded', () => {
     const packagesGrid = document.getElementById('packages-grid');
     const searchTitle = document.getElementById('search-title');
 
+    // Pega TODOS os parâmetros da URL
     const urlParams = new URLSearchParams(window.location.search);
     const destinoQuery = urlParams.get('destino');
 
-    if (!destinoQuery) {
-        searchTitle.textContent = 'Nenhum termo de busca fornecido.';
-        return;
+    // Monta um título dinâmico
+    if (destinoQuery) {
+        searchTitle.textContent = `Exibindo resultados para "${destinoQuery}"`;
+        document.title = `Busca por "${destinoQuery}"`;
+    } else {
+        searchTitle.textContent = 'Exibindo todos os pacotes';
     }
-
-    searchTitle.textContent = `Exibindo resultados para "${destinoQuery}"`;
-    document.title = `Busca por "${destinoQuery}"`;
 
     async function fetchSearchResults() {
         try {
-            const apiUrl = `http://127.0.0.1:8000/api/search/?destino=${encodeURIComponent(destinoQuery)}`;
+            // Constrói a URL da API de busca repassando TODOS os parâmetros
+            const apiUrl = `http://127.0.0.1:8000/api/search/?${urlParams.toString()}`;
+            
             const response = await fetch(apiUrl);
             if (!response.ok) {
-                throw new Error('Não foi possível realizar a busca. Tente novamente.');
+                throw new Error('Não foi possível realizar a busca.');
             }
             const data = await response.json();
             displayPackages(data.pacotes);
@@ -32,25 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayPackages(packages) {
         packagesGrid.innerHTML = '';
         if (packages.length === 0) {
-            packagesGrid.innerHTML = `<p class="text-center col-12">Nenhum pacote encontrado para "${destinoQuery}".</p>`;
+            let message = 'Nenhum pacote encontrado para esta busca.';
+            if(destinoQuery) message = `Nenhum pacote encontrado para "${destinoQuery}".`
+            packagesGrid.innerHTML = `<p class="text-center col-12">${message}</p>`;
             return;
         }
-
         packages.forEach(pkg => {
-            // Gera a tag de Hotel + Aéreo
             let inclusoText = '';
-            if (pkg.inclui_hotel && pkg.inclui_aereo) {
-                inclusoText = 'Hotel + Aéreo';
-            } else if (pkg.inclui_hotel) {
-                inclusoText = 'Hotel';
-            } else if (pkg.inclui_aereo) {
-                inclusoText = 'Aéreo';
-            }
+            if (pkg.inclui_hotel && pkg.inclui_aereo) inclusoText = 'Hotel + Aéreo';
+            else if (pkg.inclui_hotel) inclusoText = 'Hotel';
+            else if (pkg.inclui_aereo) inclusoText = 'Aéreo';
 
             const card = document.createElement('div');
             card.className = 'col';
-
-            // --- CÓDIGO DO NOVO CARD IDÊNTICO AO PRINT ---
             card.innerHTML = `
             <div class="package-card h-100">
                 <div class="package-card-img-wrapper">
@@ -60,25 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="package-card-content d-flex flex-column">
                     <div class="package-card-label">PACOTE</div>
                     <h3 class="package-card-title">${pkg.nome}</h3>
-                    
-                    ${pkg.avaliacao ? `
-                    <div class="package-card-rating">
-                        <span class="badge">${pkg.avaliacao}</span>
-                        <span class="stars">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                        </span>
-                    </div>
-                    ` : ''}
-
-                    <div class="package-card-details">
-                        ${pkg.cidade_origem ? `Saindo de ${pkg.cidade_origem}<br>` : ''}
-                        ${inclusoText ? `${inclusoText}<br>` : ''}
-                    </div>
-                    
+                    ${pkg.avaliacao ? `<div class="package-card-rating"><span class="badge">${pkg.avaliacao}</span><span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></span></div>` : ''}
+                    <div class="package-card-details">${pkg.cidade_origem ? `Saindo de ${pkg.cidade_origem}<br>` : ''}${inclusoText ? `${inclusoText}<br>` : ''}</div>
                     <div class="package-card-price-info mt-auto">
                         <div class="price-label">Preço por pessoa</div>
                         <div class="price-value">R$ ${pkg.preco}</div>
@@ -87,8 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             `;
-
-            // O link <a> agora envolve o card inteiro
             const link = document.createElement('a');
             link.href = `/pacotes/${pkg.id}/`;
             link.className = 'text-decoration-none';

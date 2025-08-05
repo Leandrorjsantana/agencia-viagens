@@ -1,0 +1,46 @@
+{% load static %}
+<footer class="main-footer bg-dark text-white pt-5 pb-4">
+    <div class="container text-center text-md-start">
+        <div class="row">
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                {% if site_config.logotipo and site_config.logotipo.url %}
+                    <img src="{{ site_config.logotipo.url }}" alt="Logotipo Sua Viagem" class="footer-logo mb-3">
+                {% endif %}
+                <p>A sua jornada dos sonhos começa aqui. Explore o mundo com nossos pacotes exclusivos.</p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Serviços</h6>
+                <p><a href="#!" class="text-reset">Pacotes</a></p>
+                <p><a href="#!" class="text-reset">Hospedagens</a></p>
+                <p><a href="#!" class="text-reset">Passagens</a></p>
+                <p><a href="#!" class="text-reset">Cruzeiros</a></p>
+            </div>
+
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Links Úteis</h6>
+                <p><a href="#!" class="text-reset">Sobre Nós</a></p>
+                <p><a href="#!" class="text-reset">Contato</a></p>
+                <p><a href="#!" class="text-reset">Ajuda</a></p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">Siga-nos</h6>
+                <div class="social-icons">
+                    {% if site_config.link_facebook %}
+                        <a href="{{ site_config.link_facebook }}" target="_blank" class="me-4 text-reset"><i class="bi bi-facebook"></i></a>
+                    {% endif %}
+                    {% if site_config.link_twitter %}
+                        <a href="{{ site_config.link_twitter }}" target="_blank" class="me-4 text-reset"><i class="bi bi-twitter-x"></i></a>
+                    {% endif %}
+                    {% if site_config.link_instagram %}
+                        <a href="{{ site_config.link_instagram }}" target="_blank" class="me-4 text-reset"><i class="bi bi-instagram"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        &copy; {% now "Y" %} Sua Viagem Ltda. Todos os direitos reservados.
+    </div>
+</footer>

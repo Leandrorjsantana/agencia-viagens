@@ -5,15 +5,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-admin.site.site_header = "Painel da Sua Viagem"
-admin.site.site_title = "Administração | Sua Viagem"
-admin.site.index_title = "Bem-vindo ao Painel de Controle"
+# As linhas de configuração do admin.site foram removidas daqui
+# porque o Jazzmin e nosso template personalizado agora cuidam disso.
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pacotes.urls')),
     path('', include('configuracoes.urls')),
-    path('', include('usuarios.urls')), # <-- Adicionamos a URL do app de usuários
+    path('', include('usuarios.urls')),
 ]
 
 if settings.DEBUG:

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - Sua Viagem</title>
+    <title>Detalhes do Serviço</title>
     
     <style>:root {--cor-primaria: {{ site_config.cor_primaria }}; --cor-secundaria: {{ site_config.cor_secundaria }}; --cor-fundo-hero: {{ site_config.cor_fundo_hero }};}</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,29 +13,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {{ site_config.tracking_scripts_head|safe }}
 </head>
-<body class="bg-light">
+<body class="d-flex flex-column min-vh-100">
+    {{ site_config.tracking_scripts_body|safe }}
 
     {% include '_header.html' %}
 
-    <main class="container">
-        <div class="row justify-content-center my-5">
-            <div class="col-md-8 col-lg-7">
-                <div class="card shadow-lg">
-                    <div class="card-body p-4 p-md-5">
-                        {% block content %}{% endblock %}
-                    </div>
-                </div>
-            </div>
+    <main class="flex-grow-1 container mt-5">
+        <div id="servico-detail-content">
+            <p class="text-center">Carregando detalhes do serviço...</p>
         </div>
     </main>
     
-    <footer class="bg-dark text-white text-center p-3 mt-auto">
-        <p class="mb-0">&copy; 2025 Sua Viagem Ltda. Todos os direitos reservados.</p>
-    </footer>
-
+    {% include '_footer.html' %}
+    {% include '_whatsapp_button.html' %}
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/config.js' %}"></script>
-    {% block scripts %}{% endblock %}
+    <script>
+        const servicoId = {{ servico_id }}; // Passa o ID do serviço para o JS
+    </script>
+    <script src="{% static 'js/servico_detalhe.js' %}"></script>
 </body>
 </html>

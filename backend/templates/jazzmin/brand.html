@@ -1,0 +1,6 @@
+<a class="brand-link" href="{% url 'admin:index' %}">
+    {% if site_config.logotipo and site_config.logotipo.url %}
+        <img src="{{ site_config.logotipo.url }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    {% endif %}
+    <span class="brand-text font-weight-light">Sua Viagem</span>
+</a>

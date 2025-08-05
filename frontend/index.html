@@ -4,25 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sua Viagem - Encontre o Destino Perfeito</title>
+    
+    <title>{{ site_config.seo_title|default:"Sua Viagem - Encontre o Destino Perfeito" }}</title>
+    <meta name="description" content="{{ site_config.seo_description }}">
+
+    <style>:root {--cor-primaria: {{ site_config.cor_primaria }}; --cor-secundaria: {{ site_config.cor_secundaria }}; --cor-fundo-hero: {{ site_config.cor_fundo_hero }};}</style>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {{ site_config.tracking_scripts_head|safe }}
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+    {{ site_config.tracking_scripts_body|safe }}
 
     {% include '_header.html' %}
 
-    <main>
+    <main class="flex-grow-1">
         <section class="hero-section">
             <div class="background-image"></div>
             <div class="container search-form-container">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation"><button class="nav-link active" id="packages-tab" data-bs-toggle="tab" data-bs-target="#packages" type="button" role="tab"><i class="bi bi-briefcase-fill me-2"></i>Pacotes</button></li>
-                    <li class="nav-item" role="presentation"><button class="nav-link" id="hosting-tab" data-bs-toggle="tab" data-bs-target="#hosting" type="button" role="tab"><i class="bi bi-building me-2"></i>Hospedagens</button></li>
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-scroll-to="#secao-pacotes"><i class="bi bi-briefcase-fill me-2"></i>Pacotes</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-scroll-to="#secao-hospedagens"><i class="bi bi-building me-2"></i>Hospedagens</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-scroll-to="#secao-passagens"><i class="bi bi-airplane-fill me-2"></i>Passagens</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-scroll-to="#secao-cruzeiros"><i class="bi bi-water me-2"></i>Cruzeiros</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-scroll-to="#secao-seguro"><i class="bi bi-shield-check me-2"></i>Seguro</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-scroll-to="#secao-disney"><i class="bi bi-magic me-2"></i>Disney</button></li>
                 </ul>
                 <div class="tab-content bg-dark p-4">
                     <div class="tab-pane fade show active" id="packages" role="tabpanel">
@@ -30,11 +42,10 @@
                         <form class="row g-2 align-items-end" id="search-form">
                             <div class="col-lg"><label class="form-label text-white-50">ORIGEM</label><input type="text" class="form-control" placeholder="De onde você sai?"></div>
                             <div class="col-lg"><label class="form-label text-white-50">DESTINO</label><input type="text" class="form-control" id="search-destination" placeholder="Para onde você vai?"></div>
-                            <div class="col-lg-2"><label class="form-label text-white-50">IDA</label><input type="date" class="form-control"></div>
-                            <div class="col-lg-2"><label class="form-label text-white-50">VOLTA</label><input type="date" class="form-control"></div>
-                            
+                            <div class="col-lg-2"><label class="form-label text-white-50">IDA</label><input type="date" class="form-control" id="search-ida"></div>
+                            <div class="col-lg-2"><label class="form-label text-white-50">VOLTA</label><input type="date" class="form-control" id="search-volta"></div>
                             <div class="col-lg-3 dropdown">
-                                <label class="form-label text-white-50">QUARTOS E HÓSPEDES</label>
+                                <label class="form-label text-white-50">HÓSPEDES</label>
                                 <button class="form-control btn btn-light text-start d-flex justify-content-between align-items-center" type="button" id="dropdownRoomsButton" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                     <span id="roomsSummary" class="text-truncate"></span><i class="bi bi-chevron-down"></i>
                                 </button>
@@ -52,45 +63,31 @@
             </div>
         </section>
 
-        <section class="py-5">
+        <section id="secao-pacotes" class="py-5">
             <div class="container">
-                <h2 class="text-center mb-4">Explore nossos destinos</h2>
-                <div id="destinos-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <p class="col-12 text-center">Carregando destinos...</p>
-                </div>
+                <h2 class="text-center mb-4">{{ site_config.texto_explore_destinos }}</h2>
+                <div id="destinos-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
             </div>
         </section>
-    </main>
 
-    <footer class="bg-dark text-white text-center p-3 mt-5"><p class="mb-0">&copy; 2025 Sua Viagem Ltda. Todos os direitos reservados.</p></footer>
+        <section id="secao-hospedagens" class="py-5 bg-light"><div class="container"><h2 class="text-center mb-4">Hospedagens Incríveis</h2><div id="hospedagem-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div></div></section>
+        <section id="secao-passagens" class="py-5"><div class="container"><h2 class="text-center mb-4">Passagens Aéreas</h2><div id="passagem-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div></div></section>
+        <section id="secao-cruzeiros" class="py-5 bg-light"><div class="container"><h2 class="text-center mb-4">Cruzeiros dos Sonhos</h2><div id="cruzeiro-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div></div></section>
+        <section id="secao-seguro" class="py-5"><div class="container"><h2 class="text-center mb-4">Viaje com Segurança</h2><div id="seguro-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div></div></section>
+        <section id="secao-disney" class="py-5 bg-light"><div class="container"><h2 class="text-center mb-4">Magia Disney</h2><div id="disney-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"></div></div></section>
+    </main>
     
+    {% include '_footer.html' %}
     {% include '_whatsapp_button.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/config.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/search-form.js' %}"></script>
-    
+    <script src="{% static 'js/servicos.js' %}"></script>
     <script>
-        function changeValue(id, delta) {
-            const input = document.getElementById(id);
-            let currentValue = parseInt(input.value, 10);
-            currentValue += delta;
-            if ((id === 'adults' || id === 'rooms') && currentValue < 1) currentValue = 1;
-            if (id === 'children' && currentValue < 0) currentValue = 0;
-            input.value = currentValue;
-            updateSummary();
-        }
-        function updateSummary() {
-            const rooms = document.getElementById('rooms').value;
-            const adults = document.getElementById('adults').value;
-            const children = document.getElementById('children').value;
-            const totalPeople = parseInt(adults, 10) + parseInt(children, 10);
-            
-            const summarySpan = document.getElementById('roomsSummary');
-            // Texto do botão ficou mais conciso, usando ícones
-            summarySpan.innerHTML = `<i class="bi bi-building"></i> ${rooms} <i class="bi bi-person-fill ms-2"></i> ${totalPeople}`;
-        }
+        function changeValue(id, delta) {const input = document.getElementById(id); let currentValue = parseInt(input.value, 10); currentValue += delta; if ((id === 'adults' || id === 'rooms') && currentValue < 1) currentValue = 1; if (id === 'children' && currentValue < 0) currentValue = 0; input.value = currentValue; updateSummary();}
+        function updateSummary() {const rooms = document.getElementById('rooms').value; const adults = document.getElementById('adults').value; const children = document.getElementById('children').value; const totalPeople = parseInt(adults, 10) + parseInt(children, 10); const summarySpan = document.getElementById('roomsSummary'); summarySpan.innerHTML = `<i class="bi bi-building"></i> ${rooms} <i class="bi bi-person-fill ms-2"></i> ${totalPeople}`;}
         document.addEventListener('DOMContentLoaded', updateSummary);
     </script>
 </body>

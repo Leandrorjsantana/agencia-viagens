@@ -3,13 +3,72 @@
 {% block title %}Crie sua Conta{% endblock %}
 
 {% block content %}
-    <h2 class="card-title text-center mb-4">Criar Conta</h2>
-    <form method="post">
+    <div class="text-center">
+        <h2 class="card-title mb-2">Crie sua Conta</h2>
+        <p class="text-muted">É rápido e fácil. Tenha acesso a um mundo de viagens!</p>
+    </div>
+
+    <form method="post" class="mt-4">
         {% csrf_token %}
-        {{ form.as_p }}
+        
+        <h5 class="mb-3">Dados Pessoais</h5>
+        <div class="form-floating mb-3">{{ form.nome }}<label for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label></div>
+        <div class="form-floating mb-3">{{ form.email }}<label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label></div>
+        <div class="form-floating mb-3">{{ form.telefone }}<label for="{{ form.telefone.id_for_label }}">{{ form.telefone.label }}</label></div>
+
+        <hr class="my-4">
+
+        <h5 class="mb-3">Endereço</h5>
+        <div class="form-floating mb-3">{{ form.cep }}<label for="{{ form.cep.id_for_label }}">{{ form.cep.label }}</label></div>
+        <div class="form-floating mb-3">{{ form.rua }}<label for="{{ form.rua.id_for_label }}">{{ form.rua.label }}</label></div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-4"><div class="form-floating">{{ form.numero }}<label for="{{ form.numero.id_for_label }}">{{ form.numero.label }}</label></div></div>
+            <div class="col-md-8"><div class="form-floating">{{ form.bairro }}<label for="{{ form.bairro.id_for_label }}">{{ form.bairro.label }}</label></div></div>
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-8"><div class="form-floating">{{ form.cidade }}<label for="{{ form.cidade.id_for_label }}">{{ form.cidade.label }}</label></div></div>
+            <div class="col-md-4"><div class="form-floating">{{ form.estado }}<label for="{{ form.estado.id_for_label }}">{{ form.estado.label }}</label></div></div>
+        </div>
+
+        <hr class="my-4">
+
+        <h5 class="mb-3">Senha de Acesso</h5>
+        <div class="form-floating mb-3">{{ form.password1 }}<label for="{{ form.password1.id_for_label }}">Senha</label></div>
+        <div class="form-floating mb-3">{{ form.password2 }}<label for="{{ form.password2.id_for_label }}">Confirmação de senha</label></div>
+
+        {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+        {% for error in form.non_field_errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+        
         <div class="d-grid mt-4">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary w-100 btn-lg">Criar Minha Conta</button>
         </div>
     </form>
-    <p class="text-center mt-3">Já tem uma conta? <a href="{% url 'usuarios:login' %}">Faça login</a></p>
+    <p class="text-center mt-3 small">Já tem uma conta? <a href="{% url 'usuarios:login' %}">Faça login</a></p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // SCRIPT PARA BUSCA AUTOMÁTICA DE CEP
+    document.addEventListener('DOMContentLoaded', function() {
+        const cepInput = document.getElementById('{{ form.cep.id_for_label }}');
+        if (cepInput) {
+            cepInput.addEventListener('blur', function() {
+                const cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                if (cep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                document.getElementById('{{ form.rua.id_for_label }}').value = data.logradouro;
+                                document.getElementById('{{ form.bairro.id_for_label }}').value = data.bairro;
+                                document.getElementById('{{ form.cidade.id_for_label }}').value = data.localidade;
+                                document.getElementById('{{ form.estado.id_for_label }}').value = data.uf;
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar CEP:', error));
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
